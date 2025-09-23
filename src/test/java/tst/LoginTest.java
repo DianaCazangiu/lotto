@@ -1,32 +1,37 @@
-package org.example;
+package tst;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.example.base;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 
-
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LoginTest extends base{
-
-      static ExtentTest test;
+public class LoginTest extends base {
+    static WebDriver driver;
+    static ExtentTest test;
     static ExtentReports extent;
 
-    @BeforeAll
+    @BeforeClass
     public static void setup() {
+
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("target/extent-report.html");
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
+
         test = extent.createTest("Login Test");
+        //extent = ExtentManager.getInstance();
+        //test = ExtentManager.extent.createTest("Login Test");
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
@@ -35,19 +40,16 @@ public class LoginTest extends base{
         options.addArguments("user-data-dir=C:/temp/chrome-clean-profile");
 
         // Dezactivăm password manager și popup-urile de browser
-        //options.addArguments("--disable-save-password-bubble");
-        //options.addArguments("--disable-notifications");
-        //options.addArguments("--disable-infobars");
-        options.addArguments("--headless=new");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-save-password-bubble");
+        options.addArguments("--disable-notifications");
+        options.addArguments("--disable-infobars");
 
         // Pornim Chrome cu aceste opțiuni
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
     }
 
-    @AfterAll
+    @AfterClass
     public static void teardown() {
         if (driver != null) {
             driver.quit();
@@ -71,8 +73,5 @@ public class LoginTest extends base{
                 "Login-ul ar trebui să fie reușit.");
     }
 
-    }
-
-
-
+}
 

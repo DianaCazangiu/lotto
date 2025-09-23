@@ -16,7 +16,7 @@ import org.testng.annotations.BeforeClass;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LoginTest extends base {
-     //static WebDriver driver;
+     static WebDriver driver;
     static ExtentTest test;
     static ExtentReports extent;
 
