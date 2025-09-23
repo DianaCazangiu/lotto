@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        maven 'C:/Users/diana/Documents/apache-maven-3.9.11-bin/apache-maven-3.9.11/bin'
-        jdk 'C:/Program Files/Java/jdk-20/bin'
+        maven 'Maven'
+        jdk 'JDK17'
     }
 
     stages {
