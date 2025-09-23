@@ -40,9 +40,12 @@ public class LoginTest extends base {
         options.addArguments("user-data-dir=C:/temp/chrome-clean-profile");
 
         // Dezactivăm password manager și popup-urile de browser
-        options.addArguments("--disable-save-password-bubble");
-        options.addArguments("--disable-notifications");
-        options.addArguments("--disable-infobars");
+        //options.addArguments("--disable-save-password-bubble");
+        //options.addArguments("--disable-notifications");
+        //options.addArguments("--disable-infobars");
+        options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
 
         // Pornim Chrome cu aceste opțiuni
         driver = new ChromeDriver(options);
