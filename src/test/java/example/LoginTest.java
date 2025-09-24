@@ -25,7 +25,7 @@ public  class LoginTest  {
     @BeforeClass
     public void setupReport() {
         String workspace = System.getProperty("user.dir"); // Jenkins workspace
-        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(workspace + "/extent-report.html");git
+        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(workspace + "/extent-report.html");
 
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
