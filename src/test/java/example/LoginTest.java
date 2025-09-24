@@ -1,62 +1,50 @@
+package example;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.example.base;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.*;
+import org.testng.Assert;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.testng.Assert.assertTrue;
 
-public class LoginTest extends base {
-     static WebDriver driver;
-    static ExtentTest test;
-    static ExtentReports extent;
+
+public  class LoginTest  {
+    private WebDriver driver;
+    public static ExtentReports extent;
+    public static ExtentTest test;
+
 
     @BeforeClass
-    public static void setup() {
-
-        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("target/extent-report.html");
+    public void setupReport() {
+        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("extent-report.html");
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
+    }
 
-        test = extent.createTest("Login Test");
-        //extent = ExtentManager.getInstance();
-        //test = ExtentManager.extent.createTest("Login Test");
+    @BeforeMethod
+    public void setUp() {
+        // ✅ WebDriverManager automatically downloads and sets up ChromeDriver
         WebDriverManager.chromedriver().setup();
-
+        // Chrome headless pentru Jenkins
         ChromeOptions options = new ChromeOptions();
-
-        // Creăm un profil curat (gol)
-        options.addArguments("user-data-dir=C:/temp/chrome-clean-profile");
-
-        // Dezactivăm password manager și popup-urile de browser
-        options.addArguments("--disable-save-password-bubble");
-        options.addArguments("--disable-notifications");
-        options.addArguments("--disable-infobars");
-
-        // Pornim Chrome cu aceste opțiuni
+        //options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
     }
 
-    @AfterClass
-    public static void teardown() {
-        if (driver != null) {
-            driver.quit();
-            extent.flush(); // Salvează raportul
-        }
-    }
-
     @Test
     public void testValidLogin() {
+        test = extent.createTest("LoginTest", "Test pentru pagina de login");
         driver.get("https://the-internet.herokuapp.com/login");
 
         // introducem credentialele
@@ -71,8 +59,20 @@ public class LoginTest extends base {
                 "Login-ul ar trebui să fie reușit.");
     }
 
+
+    @AfterMethod
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    @AfterClass
+    public void flushReport() {
+        extent.flush();
     }
 
 
 
+}
 
