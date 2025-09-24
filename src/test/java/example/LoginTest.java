@@ -35,9 +35,10 @@ public  class LoginTest  {
         WebDriverManager.chromedriver().setup();
         // Chrome headless pentru Jenkins
         ChromeOptions options = new ChromeOptions();
-        //options.addArguments("--headless=new");
+        options.addArguments("--headless=new");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--window-size=1920,1080"); // important for some page elementsgit add.
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
     }
