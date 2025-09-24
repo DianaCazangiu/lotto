@@ -24,7 +24,8 @@ public  class LoginTest  {
 
     @BeforeClass
     public void setupReport() {
-        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("extent-report.html");
+        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "/target/extent-report.html");
+
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
     }
